@@ -1,0 +1,16 @@
+{
+    "name": "darod/php_serializer",
+  
+    "autoload": {
+        "psr-4": {
+            "Darod\\PhpSerializer\\": "app/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Darod103",
+            "email": "darod103@gmail.com"
+        }
+    ],
+    "require": {}
+}
