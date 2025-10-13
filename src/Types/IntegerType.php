@@ -8,6 +8,10 @@ use App\Exceptions\ValidationException;
 use App\Interfaces\TypeInterface;
 use App\Sanitizer;
 
+/**
+ * Тип для валидации и нормализации целочисленного числа
+ *
+ */
 final class IntegerType implements TypeInterface
 {
 

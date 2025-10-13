@@ -10,6 +10,7 @@ use App\Sanitizer;
 
 /**
  * Валидация российских телефонных номеров
+ * Результат: 79991234567 (11 цифр, начинается с 7)
  */
 final class PhoneRuType implements TypeInterface
 {
@@ -25,18 +26,48 @@ final class PhoneRuType implements TypeInterface
 
         $digits = str_replace(['+', '-'], '', filter_var((string)$value, FILTER_SANITIZE_NUMBER_INT));
 
-        if (strlen($digits) === 11 && $digits[0] === '8') {
-            $digits = '7' . substr($digits, 1);
-        } elseif (strlen($digits) === 10) {
-            $digits = '7' . $digits;
-        }
 
-        if (strlen($digits) !== 11 || $digits[0] !== '7') {
+        $len = strlen($digits);
+        if ($len !== 10 && $len !== 11) {
             throw new ValidationException(
                 message: 'Некорректный формат телефона РФ',
                 path: $path,
                 value: $value
             );
+        }
+
+
+        $normalized = $this->normalize($digits);
+
+
+        if (strlen($normalized) !== 11 || $normalized[0] !== '7') {
+            throw new ValidationException(
+                message: 'Некорректный формат телефона РФ',
+                path: $path,
+                value: $value
+            );
+        }
+
+        return $normalized;
+    }
+
+    /**
+     * Нормализация номера к формату 7XXXXXXXXXX
+     *
+     * @param string $digits Строка из цифр (10 или 11 символов)
+     * @return string Нормализованный номер
+     */
+    private function normalize(string $digits): string
+    {
+        $len = strlen($digits);
+
+
+        if ($len === 11 && $digits[0] === '8') {
+            return '7' . substr($digits, 1);
+        }
+
+        if ($len === 10) {
+            return '7' . $digits;
         }
 
         return $digits;
