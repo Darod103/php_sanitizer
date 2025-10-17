@@ -8,7 +8,7 @@ use App\Exceptions\ValidationException;
 use App\Interfaces\TypeInterface;
 
 /**
- * Санитайзер данных с накоплением ошибок
+ * Санитайзер данных с накоплением ошибок.
  */
 final class Sanitizer
 {
@@ -16,16 +16,44 @@ final class Sanitizer
     private array $errors = [];
 
     /**
-     * Точка входа: санитизировать данные по типу
+     * Точка входа: санитизировать данные по типу.
      */
     public function sanitize(mixed $data, TypeInterface $type, string $path = ''): mixed
     {
         $this->clearErrors();
+
         return $this->sanitizeValue($data, $type, $path);
     }
 
     /**
-     * Рекурсивная валидация значения
+     * Добавить ошибку валидации (используется типами).
+     */
+    public function addError(string $path, mixed $value, string $message): void
+    {
+        $this->errors[] = compact('path', 'value', 'message');
+    }
+
+    /**
+     * Получить все накопленные ошибки.
+     */
+    /**
+     * @return array<int, array{path: string, value: mixed, message: string}>
+     */
+    public function getErrors(): array
+    {
+        return $this->errors;
+    }
+
+    /**
+     * Проверить наличие ошибок.
+     */
+    public function hasErrors(): bool
+    {
+        return [] !== $this->errors;
+    }
+
+    /**
+     * Рекурсивная валидация значения.
      */
     private function sanitizeValue(mixed $value, TypeInterface $type, string $path): mixed
     {
@@ -37,36 +65,13 @@ final class Sanitizer
                 'value' => $e->getValue(),
                 'message' => $e->getMessage(),
             ];
+
             return null;
         }
     }
 
     /**
-     * Добавить ошибку валидации (используется типами)
-     */
-    public function addError(string $path, mixed $value, string $message): void
-    {
-        $this->errors[] = compact('path', 'value', 'message');
-    }
-
-    /**
-     * Получить все накопленные ошибки
-     */
-    public function getErrors(): array
-    {
-        return $this->errors;
-    }
-
-    /**
-     * Проверить наличие ошибок
-     */
-    public function hasErrors(): bool
-    {
-        return $this->errors !== [];
-    }
-
-    /**
-     * Очистить накопленные ошибки
+     * Очистить накопленные ошибки.
      */
     private function clearErrors(): void
     {

@@ -4,13 +4,18 @@ declare(strict_types=1);
 
 namespace Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
+use App\Exceptions\ValidationException;
 use App\Sanitizer;
 use App\Types\ArrayType;
 use App\Types\IntegerType;
 use App\Types\StringType;
-use App\Exceptions\ValidationException;
+use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 final class ArrayTypeTest extends TestCase
 {
     private Sanitizer $sanitizer;
@@ -92,6 +97,4 @@ final class ArrayTypeTest extends TestCase
 
         $type->sanitize('not-an-array', 'items', $this->sanitizer);
     }
-
-
 }

@@ -4,11 +4,16 @@ declare(strict_types=1);
 
 namespace Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
+use App\Exceptions\ValidationException;
 use App\Sanitizer;
 use App\Types\PhoneRuType;
-use App\Exceptions\ValidationException;
+use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 final class PhoneRuTypeTest extends TestCase
 {
     private Sanitizer $sanitizer;
@@ -95,6 +100,4 @@ final class PhoneRuTypeTest extends TestCase
 
         $this->type->sanitize('not-a-phone', 'phone', $this->sanitizer);
     }
-
-
 }

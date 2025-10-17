@@ -4,13 +4,18 @@ declare(strict_types=1);
 
 namespace Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
-use App\Sanitizer;
-use App\Types\StructType;
-use App\Types\StringType;
-use App\Types\IntegerType;
 use App\Exceptions\ValidationException;
+use App\Sanitizer;
+use App\Types\IntegerType;
+use App\Types\StringType;
+use App\Types\StructType;
+use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 final class StructTypeTest extends TestCase
 {
     private Sanitizer $sanitizer;
@@ -117,6 +122,4 @@ final class StructTypeTest extends TestCase
 
         $type->sanitize('not-an-array', 'user', $this->sanitizer);
     }
-
-
 }

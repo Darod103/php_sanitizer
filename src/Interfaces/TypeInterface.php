@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Interfaces;
 
-use app\Sanitizer;
+use App\Sanitizer;
 
 interface TypeInterface
 {

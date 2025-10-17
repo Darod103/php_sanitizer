@@ -1,0 +1,9 @@
+parameters:
+    level: 6
+    paths:
+        - src
+        - tests
+    tmpDir: var/cache/phpstan
+    checkMissingIterableValueType: true
+    checkGenericClassInNonGenericObjectType: true
+    inferPrivatePropertyTypeFromConstructor: true

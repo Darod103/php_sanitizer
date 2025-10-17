@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Tests\Unit;
@@ -8,9 +9,13 @@ use App\Sanitizer;
 use App\Types\FloatType;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 final class FloatTypeTest extends TestCase
 {
-
     private Sanitizer $sanitizer;
     private FloatType $type;
 
@@ -35,6 +40,7 @@ final class FloatTypeTest extends TestCase
         $this->assertSame(4.56, $result);
         $this->assertFalse($this->sanitizer->hasErrors());
     }
+
     public function testSanitizeWithNegativeFloat(): void
     {
         $result = $this->type->sanitize('-7.89', 'temp', $this->sanitizer);
@@ -84,5 +90,4 @@ final class FloatTypeTest extends TestCase
         $this->assertSame(100.0, $result);
         $this->assertFalse($this->sanitizer->hasErrors());
     }
-
 }

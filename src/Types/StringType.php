@@ -6,15 +6,13 @@ namespace App\Types;
 
 use App\Exceptions\ValidationException;
 use App\Interfaces\TypeInterface;
-use app\Sanitizer;
+use App\Sanitizer;
 
 /**
- * Тип для валидации и нормализации строки
- *
+ * Тип для валидации и нормализации строки.
  */
 final class StringType implements TypeInterface
 {
-
     public function sanitize(mixed $value, string $path, Sanitizer $sanitizer): mixed
     {
         if (!is_string($value) && !is_numeric($value)) {
@@ -25,6 +23,6 @@ final class StringType implements TypeInterface
             );
         }
 
-        return trim((string)$value);
+        return trim((string) $value);
     }
 }

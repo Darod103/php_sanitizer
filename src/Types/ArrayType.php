@@ -9,15 +9,17 @@ use App\Interfaces\TypeInterface;
 use App\Sanitizer;
 
 /**
- * Тип для массивов однотипных элементов
+ * Тип для массивов однотипных элементов.
  */
 final class ArrayType implements TypeInterface
 {
     public function __construct(
         private readonly TypeInterface $elementType
-    ) {
-    }
+    ) {}
 
+    /**
+     * @return array<int|string, mixed>
+     */
     public function sanitize(mixed $value, string $path, Sanitizer $sanitizer): array
     {
         if (!is_array($value)) {
@@ -48,11 +50,12 @@ final class ArrayType implements TypeInterface
     }
 
     /**
-     * Построение пути для элемента массива
+     * Построение пути для элемента массива.
      */
     private function buildPath(string $basePath, int|string $index): string
     {
         $indexPart = "[{$index}]";
-        return $basePath === '' ? $indexPart : $basePath . $indexPart;
+
+        return '' === $basePath ? $indexPart : $basePath.$indexPart;
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit;
 
 use App\Exceptions\ValidationException;
@@ -7,6 +9,11 @@ use App\Sanitizer;
 use App\Types\StringType;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 final class StringTypeTest extends TestCase
 {
     private Sanitizer $sanitizer;
@@ -59,5 +66,4 @@ final class StringTypeTest extends TestCase
 
         $this->type->sanitize(null, 'name', $this->sanitizer);
     }
-
 }

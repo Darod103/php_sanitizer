@@ -1,13 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Unit;
 
 use App\Exceptions\ValidationException;
 use App\Sanitizer;
 use App\Types\IntegerType;
-use App\Types\StringType;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 final class IntegerTypeTest extends TestCase
 {
     private Sanitizer $sanitizer;
@@ -83,5 +89,4 @@ final class IntegerTypeTest extends TestCase
 
         $this->type->sanitize(12.5, 'age', $this->sanitizer);
     }
-
 }

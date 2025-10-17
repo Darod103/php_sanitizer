@@ -14,14 +14,17 @@ use App\Sanitizer;
 final class StructType implements TypeInterface
 {
     /**
-     * @param array<string, TypeInterface> $fields Поля структуры и их типы
-     * @param bool $allowUnknown Разрешить неизвестные поля в данных
+     * @param array<string, TypeInterface> $fields       Поля структуры и их типы
+     * @param bool                         $allowUnknown Разрешить неизвестные поля в данных
      */
     public function __construct(
         private readonly array $fields,
         private readonly bool $allowUnknown = false
     ) {}
 
+    /**
+     * @return array<string, mixed>
+     */
     public function sanitize(mixed $value, string $path, Sanitizer $sanitizer): array
     {
         if (!is_array($value)) {
@@ -43,6 +46,7 @@ final class StructType implements TypeInterface
                     value: null,
                     message: 'Обязательное поле отсутствует'
                 );
+
                 continue;
             }
 
@@ -65,22 +69,24 @@ final class StructType implements TypeInterface
     }
 
     /**
-     * Построение пути для поля структуры
+     * Построение пути для поля структуры.
      */
     private function buildFieldPath(string $basePath, string $fieldName): string
     {
-        return $basePath === '' ? $fieldName : "{$basePath}.{$fieldName}";
+        return '' === $basePath ? $fieldName : "{$basePath}.{$fieldName}";
     }
 
     /**
-     * Проверка на неизвестные поля
+     * Проверка на неизвестные поля.
+     *
+     * @param array<string, mixed> $value
      */
     private function validateNoUnknownFields(array $value, string $path, Sanitizer $sanitizer): void
     {
         $unknownFields = array_diff_key($value, $this->fields);
 
         foreach ($unknownFields as $fieldName => $fieldValue) {
-            $fieldPath = $this->buildFieldPath($path, (string)$fieldName);
+            $fieldPath = $this->buildFieldPath($path, (string) $fieldName);
             $sanitizer->addError(
                 path: $fieldPath,
                 value: $fieldValue,

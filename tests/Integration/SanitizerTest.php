@@ -4,10 +4,20 @@ declare(strict_types=1);
 
 namespace Tests\Integration;
 
-use PHPUnit\Framework\TestCase;
 use App\Sanitizer;
-use App\Types\{StringType, IntegerType, PhoneRuType, StructType, ArrayType, FloatType};
+use App\Types\ArrayType;
+use App\Types\FloatType;
+use App\Types\IntegerType;
+use App\Types\PhoneRuType;
+use App\Types\StringType;
+use App\Types\StructType;
+use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ *
+ * @coversNothing
+ */
 final class SanitizerTest extends TestCase
 {
     private Sanitizer $sanitizer;
@@ -181,10 +191,8 @@ final class SanitizerTest extends TestCase
 
     public function testClearErrorsBetweenSanitizeCalls(): void
     {
-
         $this->sanitizer->sanitize('invalid', new IntegerType());
         $this->assertTrue($this->sanitizer->hasErrors());
-
 
         $result = $this->sanitizer->sanitize(123, new IntegerType());
 
